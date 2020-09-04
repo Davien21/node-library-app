@@ -1,7 +1,7 @@
 /**
  * Entry file to out application
  */
-
+const port = 8080;
 const http = require('http');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
@@ -38,7 +38,7 @@ const httpServer = http.createServer((req, res) => {
             payload: parsedPayload
         };
 
-        const chosenHandler = typeof (router[trimedPath]) !== 'undefined' ? router[trimedPath] : router.notfound;
+        const chosenHandler = routeHandler;
         //use the chosen handler to handle the request
         chosenHandler(data, (statusCode, result) => {
             statusCode = typeof (statusCode) === 'number' ? statusCode : 200;
@@ -58,14 +58,9 @@ const httpServer = http.createServer((req, res) => {
 });
 
 //start listening on port 8080
-httpServer.listen(8080, () => {
-    console.log("server is listening on port 8080");
+httpServer.listen(port, () => {
+    console.log(`server is listening on ${port}`);
 });
 
-const router = {
-    ping : routeHandler.ping,
-    books : routeHandler.Books,
-    notfound : routeHandler.notfound
-}
 
 
