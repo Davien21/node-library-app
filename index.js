@@ -1,7 +1,7 @@
 /**
  * Entry file to out application
  */
-const port = 8080;
+const port = 8080,host = 'localhost';
 const http = require('http');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
@@ -38,28 +38,24 @@ const httpServer = http.createServer((req, res) => {
             payload: parsedPayload
         };
 
-        const chosenHandler = routeHandler;
-        //use the chosen handler to handle the request
-        chosenHandler(data, (statusCode, result) => {
-            statusCode = typeof (statusCode) === 'number' ? statusCode : 200;
-            result = typeof (res) === 'object' ? result : {};
-
+        //use the route handler module to handle the requests
+        routeHandler(data, (statusCode, result) => {
+            statusCode = typeof statusCode === 'number' ? statusCode : 200;
+            result = typeof res === 'object' ? result : {};
             const responseObj = JSON.stringify(result);
 
             res.setHeader('Content-type', "application/json");
             res.writeHead(statusCode);
-
             res.write(responseObj);
             res.end();
-
-            console.log(`the url visited was: ${trimedPath}, and the method is ${method}`);
+            // console.log(`the url visited was: ${trimedPath}, and the method is ${method}`);
         });
     });
 });
 
 //start listening on port 8080
 httpServer.listen(port, () => {
-    console.log(`server is listening on ${port}`);
+    console.log(`server is live at http://${host}:${port}`);
 });
 
 
