@@ -1,12 +1,11 @@
 /**
  * Entry file to out application
  */
-const port = process.env.PORT || 8080,host = 'localhost';
+const port = process.env.PORT || 8080;
 const http = require('http');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
 const routeHandler = require('./lib/routehandler');
-
 const httpServer = http.createServer((req, res) => {
     //parse the incoming url
     const parsedurl = url.parse(req.url, true);
@@ -55,7 +54,7 @@ const httpServer = http.createServer((req, res) => {
 
 //start listening on port 8080
 httpServer.listen(port, () => {
-    console.log(`server is live at http://${host}:${port}`);
+    console.log(`server is listening at port ${port}`);
 });
 
 
